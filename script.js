@@ -15,10 +15,11 @@ let bg;
 let paperTex;
 
 let renderSide = true;
-let imgBody, imgHead, imgEat, imgFood;
+let imgBody, imgHead, imgEat, imgFood, imgTail;
 
 let scaleBody = 0.5;
-let scaleHead = 0.8;
+let scaleHead = 0.5;
+let scaleTail = 0.5;
 let scaleFood = 0.4;
 
 function preload() {
@@ -27,6 +28,7 @@ function preload() {
   imgHead = loadImage("img/head.png");
   imgEat = loadImage("img/eat.png");
   imgFood = loadImage("img/food.png");
+  imgTail = loadImage("img/tail.png");
 }
 
 function setup() {
@@ -136,7 +138,8 @@ function resetGame() {
     interval,
     imgBody,
     imgHead,
-    imgEat
+    imgEat,
+    imgTail,
   );
   apples = [];
   apples.push(new Apple(0, 0, imgFood));
@@ -238,10 +241,11 @@ function keyReceived(keyIs) {
 }
 
 class Snake {
-  constructor(_x, _y, len, interval, imgB, imgH, imgE) {
+  constructor(_x, _y, len, interval, imgB, imgH, imgE, imgT) {
     this.imageBody = imgB;
     this.imageHead = imgH;
     this.imageEat = imgE;
+    this.imageTail = imgT;
 
     this.body = [];
     for (let i = 0; i < len; i++) {
@@ -453,7 +457,11 @@ class Snake {
         scale(scl);
       }
 
-      image(this.imageBody, 0, 0);
+      if (i === 1) {
+        image(this.imageTail, 0, 0);
+      } else {
+        image(this.imageBody, 0, 0);
+      }
       pop();
 
       if (i === seg.length - 1) {
@@ -461,15 +469,6 @@ class Snake {
         imageMode(CENTER);
         translate(bX * cell + _x, bY * cell + _y);
         if (renderSide) {
-          // const dirX = bX - aX;
-          // const dirY = bY - aY;
-          // if (dirY === 0) {
-          //   scale(dirX < 0 ? -sclH : sclH, sclH);
-          // } else {
-          //   scale(sclH, dirX < 0 ? -sclH : sclH);
-          //   rotate(dirX < 0 ? -this.dirNew * HALF_PI : this.dirNew * HALF_PI);
-          // }
-
           if (this.dirNew % 2 === 0) {
             scale(this.dirNew === 0 ? sclH : -sclH, sclH);
           } else {
