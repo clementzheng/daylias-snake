@@ -18,7 +18,7 @@ let renderSide = true;
 let imgBody, imgHead, imgEat, imgFood, imgTail;
 
 let scaleBody = 0.5;
-let scaleHead = 0.5;
+let scaleHead = 0.55;
 let scaleTail = 0.5;
 let scaleFood = 0.4;
 
